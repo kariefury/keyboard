@@ -34,34 +34,81 @@
         <h3>
 <a id="welcome-to-lab-2" class="anchor" href="#welcome-to-lab-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to Lab 2!</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>This write-up describes the steps and knowledge necessary to build an interface from a push button array to a FIFO. It assumes the reader has completed the Lab 1 Tutorial, Xillibus on Zedboard and is familiar with the Vivado toolset from Xilinx. </p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<p>In Lab 2 we will write HDL using the Verilog language to develop an input only interface. The lab starts by understanding the wiring of the push button. Next Vivado is used to write and simulate a Verilog module for a single push button. The signal input into the FPGA fabric from the push button is studied using the Vivado debug module, and the Verilog is extended to implement hardware debouncing of the push button. Finally we multiplex 9 push buttons together and create an interface to a keyboard consisting of 9 push buttons.</p>
+
+<h3>
+<a id="1-get-started-wire-a-push-button" class="anchor" href="#1-get-started-wire-a-push-button" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Get Started: Wire a Push Button</h3>
+
+<ul>
+<li>Wire a push button and verify using a multimeter. Use a 1K Resistor.</li>
+</ul>
+
+<h3>
+<a id="2-write-verilog" class="anchor" href="#2-write-verilog" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Write Verilog</h3>
+
+<ul>
+<li>Using Vivado, write a short Verilog module. It should have an input named button (<strong>btn</strong>) and an output named led(<strong>led</strong>). Include a clock (<strong>clk</strong>) as input as well. Name every variable with 3 Characters. (haha...) </li>
+<li>When the button is 0 the led is off.</li>
+<li>When the button is 1 the led is on.</li>
+<li>Write a test bench and simulate the Verilog. 
+Question: What sort of simulation signal should you use for your input?
+(Maybe draw a figure here.)</li>
+</ul>
+
+<pre><code>module button(input btn, input clk, input, rst, output led);
+
+always @ (posedge clk)
+begin
+    if (rst == 1'b0) // reset when rst is 0
+        begin
+            led &lt;= 1'b0; // LED is off when reset is low
+        end
+    else
+        begin
+        if (btn == 1'b1)
+            begin
+                led &lt;= 1'b1;
+            else
+                led &lt;= 1'b0;
+            end
+    end
+end
+
+endmodule
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<h3>
+<a id="3-record-debug-signals" class="anchor" href="#3-record-debug-signals" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Record Debug Signals</h3>
+
+<p>The signal input into the FPGA fabric from the push button is studied using the Vivado debug module</p>
 
 <h3>
-<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<a id="4-hardware-debounce-push-button" class="anchor" href="#4-hardware-debounce-push-button" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. Hardware Debounce Push Button</h3>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<p>Write some more code...
+Record debug....
+Test Debounce with single push button</p>
 
 <h3>
-<a id="rather-drive-stick" class="anchor" href="#rather-drive-stick" aria-hidden="true"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<a id="5-assemble-9-push-buttons" class="anchor" href="#5-assemble-9-push-buttons" aria-hidden="true"><span class="octicon octicon-link"></span></a>5. Assemble 9 Push Buttons</h3>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<p>How many signal wires are needed for 9 push buttons?</p>
+
+<h3>
+<a id="6-write-verilog-for-multiplexing" class="anchor" href="#6-write-verilog-for-multiplexing" aria-hidden="true"><span class="octicon octicon-link"></span></a>6. Write Verilog for Multiplexing</h3>
+
+<h3>
+<a id="7-interrupts-or-interface-to-xillibus-dev-tree-or-to-fifo" class="anchor" href="#7-interrupts-or-interface-to-xillibus-dev-tree-or-to-fifo" aria-hidden="true"><span class="octicon octicon-link"></span></a>7. Interrupts or interface to Xillibus /dev/ tree or to FIFO</h3>
+
+<h3>
+<a id="8-happy-and-complete-working-verilog-push-button-keyboard" class="anchor" href="#8-happy-and-complete-working-verilog-push-button-keyboard" aria-hidden="true"><span class="octicon octicon-link"></span></a>8. Happy and Complete working Verilog push button keyboard</h3>
 
 <h3>
 <a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="https://help.github.com/pages">https://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<p>By <a href="https://github.com/kariefury" class="user-mention">@kariefury</a></p>
       </section>
     </div>
 
@@ -73,7 +120,17 @@ $ git checkout gh-pages
       </footer>
     </div>
 
-    
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-47389602-4");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
 
   </body>
 </html>
