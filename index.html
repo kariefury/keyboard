@@ -53,11 +53,10 @@
 <li>When the button is 0 the led is off.</li>
 <li>When the button is 1 the led is on.</li>
 <li>Write a test bench and simulate the Verilog. 
-Question: What sort of simulation signal should you use for your input?
-(Maybe draw a figure here.)</li>
+Question: What sort of simulation signal should you use for your input? Do you need to include reset and enable signals?</li>
 </ul>
 
-<p>Here is the Verilog I used for my first run.</p>
+<p>Here is the Verilog I used to turn the LED on when the button is 1 (<strong>btn == 1</strong>).</p>
 
 <pre><code>module button(input btn, input clk, input rst, output led);
 
@@ -110,6 +109,8 @@ endmodule
 
 endmodule 
 </code></pre>
+
+<p>After successfully simulating your code, <strong>create and package IP</strong> for the button module.</p>
 
 <h3>
 <a id="3-record-debug-signals" class="anchor" href="#3-record-debug-signals" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Record Debug Signals</h3>
