@@ -110,7 +110,9 @@ endmodule
 endmodule 
 </code></pre>
 
-<p>After successfully simulating your code, <strong>create and package IP</strong> for the button module.</p>
+<p>After successfully simulating your code, <strong>create and package IP</strong> for the button module. Then close the button project in Vivado and open the xillydemo project. Click on <strong>Project Settings</strong> in the Flow Navigator and go to the IP tab. Click on <strong>Add IP</strong> and select the folder containing your button project to add.</p>
+
+<p>To add the new button module, we need to modify the pin constrains file for xillibus, that is done in the <strong>Constraints</strong> tab. First, redirect two GPIO pins to unused pins (make sure the pins you redirect to are also 3.3V). Then, use the free PMOD pin and the free LED pin to connect your button input and output.</p>
 
 <h3>
 <a id="3-record-debug-signals" class="anchor" href="#3-record-debug-signals" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Record Debug Signals</h3>
