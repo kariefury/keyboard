@@ -57,6 +57,8 @@ Question: What sort of simulation signal should you use for your input?
 (Maybe draw a figure here.)</li>
 </ul>
 
+<p>Here is the Verilog I used for my first run.</p>
+
 <pre><code>module button(input btn, input clk, input rst, output led);
 
 always @ (posedge clk)
@@ -77,6 +79,36 @@ begin
 end
 
 endmodule
+</code></pre>
+
+<p>The test bench code looks like this:</p>
+
+<pre><code>module tb( );
+  reg clk, reset, enable, btnPress;
+  wire led;
+  button u1 ( 
+  .btn( btnPress ),
+  .clk( clk ), 
+  .rst( reset ),
+  .led( led )
+  ); 
+
+  initial 
+  begin 
+    clk = 0; 
+    reset = 0; 
+    btnPress = 0;
+    enable = 1;
+    #1 reset = 1; // #1 means delay one cycle. (#5 means delay 5 cycles...)
+  end 
+
+  always 
+    #5 clk = !clk; 
+
+  always 
+    #50 btnPress = !btnPress;
+
+endmodule 
 </code></pre>
 
 <h3>
